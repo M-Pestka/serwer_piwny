@@ -29,8 +29,9 @@ def initialize():
     # tworzenie tabeli piwek
     try:
         c.execute('''CREATE TABLE IF NOT EXISTS PIWKAHEHE(
-                    FROM_ID INT,
-                    TO_ID INT);''')
+                    TRANS_ID INTEGER NOT NULL PRIMARY KEY ASC,
+                    FROM_ID INTEGER,
+                    TO_ID INTEGER);''')
 
         conn.commit()
 
