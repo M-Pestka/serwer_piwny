@@ -1,5 +1,5 @@
 from flask import Flask
-from api import api_docs
+from api import api_docs, bicycles
 
 b_server = Flask(__name__)
 
@@ -10,7 +10,7 @@ def api_docs_handler():
 
 @b_server.route("/bicycles")
 def bicycle_handler():
-    return 'strona w budowie'
+    return bicycles.handle()
 
 
 b_server.run()
