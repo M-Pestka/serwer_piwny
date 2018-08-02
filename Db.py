@@ -31,24 +31,22 @@ class Piwna_baza:
         
         self.logger.info('Koniec otwierania piwnej bazy')
 
-    def add_user(self, name: str, login: str):
-        n = name
-        l = login
-        name = cgi.escape(name)
-        login = cgi.escape(login)
+    def sanitize(input_str):
+        return input_str
 
-        if(l != login or n != name):
-            self.logger.warn('USERS HAS TRIED TO MAKE SQL INJECTION CREDENTIALS OF ADDED USER:')
+    def add_user(self, name: str, login: str):
+        
+        #raise Exception('zaipleentuj sanitacje chuju')
 
         name = name.capitalize()
         login = login.capitalize()
-        juzerzy = self.c.execute('SELECT * FROM USERS WHERE LOGIN = "{}"'.format(login)).fetchall()
+        juzerzy = self.c.execute('SELECT * FROM USERS WHERE LOGIN = (?)',(login,)).fetchall()
         if(len(juzerzy) != 0):
             self.logger.warn('user login already existed; login: {}'.format(login))
             raise ValueError('User already exists')
         
         self.logger.info('Adding new user NAME: {}   LOGIN: {}'.format(name, login))
-        self.c.execute('INSERT INTO USERS(NAME, LOGIN) VALUES ("{0}", "{1}")'.format(name, login))
+        self.c.execute('INSERT INTO USERS(NAME, LOGIN) VALUES (?, ?)',(name, login))
         self.logger.info('added')
         self.conn.commit()
 
@@ -67,7 +65,7 @@ class Piwna_baza:
                                 FROM PIWKAHEHE p 
                                 LEFT JOIN USERS u
                                 ON u.ID = p.FROM_ID
-                                WHERE p.TO_ID = {}; '''.format(ID))
+                                WHERE p.TO_ID = {}; ''',(ID,))
             piwka = self.c.fetchall()
             self.logger.info('piwka pomyślnie odczytane')
             return piwka
@@ -86,7 +84,7 @@ class Piwna_baza:
                                 FROM PIWKAHEHE p 
                                 LEFT JOIN USERS u
                                 ON u.ID = p.TO_ID
-                                WHERE FROM_ID = {}; '''.format(ID))
+                                WHERE FROM_ID = (?); ''',(ID,))
             piwka = self.c.fetchall()
             self.logger.info('piwka pomyślnie odczytane')
             return piwka
@@ -102,20 +100,18 @@ class Piwna_baza:
         
         self.logger.info('dodawanie piwka od: {0}     do: {1}'.format(ID_from, ID_to))
 
-        self.c.execute('INSERT INTO PIWKAHEHE(FROM_ID, TO_ID) VALUES ({0}, {1})'.format(ID_from, ID_to))
+        self.c.execute('INSERT INTO PIWKAHEHE(FROM_ID, TO_ID) VALUES (?, ?)',(ID_from, ID_to))
         self.conn.commit()
 
         self.logger.info('dodano piwerko')
         return 0
 
     def get_user_ID(self, login: str) -> int:
-        l = login
-        login = cgi.escape(login)
+        raise Exception('zaimplementuj sanitacje chuju')
         self.logger.debug('getowanie ID jusera: {}'.format(login))
-        if(l != login):
-            self.logger.warn('USERS HAS TRIED TO MAKE SQL INJECTION LOGIN: {}'.format(login))
+        
         login = login.capitalize()
-        jusers = self.c.execute('SELECT ID FROM USERS u WHERE u.LOGIN = "{}" LIMIT 2'.format(login)).fetchone()
+        jusers = self.c.execute('SELECT ID FROM USERS u WHERE u.LOGIN = (?) LIMIT 2', (login,)).fetchone()
 
         if(jusers is None or len(jusers)==0):
             self.logger.warn('user doesnt exist login: {}'.format(login))
@@ -138,15 +134,15 @@ class Piwna_baza:
             self.logger.warn('SQL injection ID: {}'.format(str(ID)))
             raise ValueError('no i chuj')
         self.logger.info('proba oddania piwkaod: {}    do:{} '.format(ID_kto_oddaje, ID_kto_przyjmuje))
-        a = self.c.execute('SELECT * FROM PIWKAHEHE WHERE FROM_ID = {0} AND TO_ID = {1};'''.format(ID_kto_oddaje, ID_kto_przyjmuje)).fetchall()
+        a = self.c.execute('SELECT * FROM PIWKAHEHE WHERE FROM_ID = (?) AND TO_ID = (?);''',(ID_kto_oddaje, ID_kto_przyjmuje)).fetchall()
         print(a)
         if(a is None or a == list()):
-            self.logger.warn('OSZUKUJOOOOOOO')
+            self.logger.warn('OSZUKUJOOOOOOO od: {}    do:{} '.format(ID_kto_oddaje, ID_kto_przyjmuje))
             raise ValueError('chuje oszukujo nie ma takiego piwka')
         self.logger.info('oddawanie piwka od: {}    do:{} '.format(ID_kto_oddaje, ID_kto_przyjmuje))
         self.c.execute('''DELETE FROM PIWKAHEHE WHERE TRANS_ID = 
                     (SELECT MIN(TRANS_ID) FROM PIWKAHEHE 
-                        WHERE FROM_ID = {0} AND TO_ID = {1});'''.format(ID_kto_oddaje, ID_kto_przyjmuje))
+                        WHERE FROM_ID = (?) AND TO_ID = (?));''',(ID_kto_oddaje, ID_kto_przyjmuje))
         self.conn.commit()
         self.logger.info('piwko oddane :3')
 
@@ -155,7 +151,7 @@ class Piwna_baza:
             self.logger.warn('SQL injection ID: {}'.format(str(user_ID)))
             raise ValueError('noi chuj')
         self.logger.warn('trying to delete user ID:{}'.format(user_ID))
-        a = self.c.execute('select name, login from users where ID = {}'.format(user_ID))
+        a = self.c.execute('select name, login from users where ID = (?)',(user_ID,))
 
 
 
@@ -169,10 +165,6 @@ class Piwna_baza:
             self.logger.debug(str(e))
             self.logger.error('Nie udało się zamknąć bazy')
         
-
 if(__name__ == '__main__'):
     p = Piwna_baza()
-    id = p.get_user_ID('pestka')
-    
-    print('piwka: ', p.get_piwka_ktore_wisisz(id))
-    p.close()
+    p.oddaj_piwko(1,2)
