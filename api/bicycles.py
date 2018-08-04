@@ -28,7 +28,6 @@ def handle():
             "bike_racks": int(place_info['@bike_racks'])
         })
     
-
     return Response(json.dumps(processed_places_info, ensure_ascii=False), mimetype='application/json')
 
     

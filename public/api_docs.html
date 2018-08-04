@@ -6,7 +6,21 @@
         <h1>Witamy na backendzie serwera piwnego</h1>
         <h4>Udostępnione są następujące usługi:</h4>
         <ul>
-            <li>Brak usług :(</li>
+            <li><code>GET /api-docs</code> - zwraca stronę z wszystkimi dostępnymi usługami </li>
+            <li><code>GET /bicycles</code> - zwraca listę JSONów z danymi o stacjach VETURILO dookoła akademika
+                <p style="margin-left: 2%">
+                    <h7>Format odpowiedzi:</h7>
+                    <code>
+                        [ 
+                            {
+                                name,
+                                bikes,
+                                bike_racks
+                            },
+                        ]
+                    </code>
+                </p>
+                </li>
         </ul>
     </body>
 </html>
