@@ -13,4 +13,8 @@ def bicycle_handler():
     return bicycles.handle()
 
 
-b_server.run()
+if __name__ == '__main__':
+    b_server.config['RESTFUL_JSON'] = {
+            'ensure_ascii': False
+        }
+    b_server.run()
