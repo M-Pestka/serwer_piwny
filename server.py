@@ -16,12 +16,11 @@ def bicycle_handler():
     return bicycles.handle()
 
 
-if __name__ == '__main__':
-    b_server.config['RESTFUL_JSON'] = {
-            'ensure_ascii': False
-    }
-    PORT = os.getenv('PORT')
-    if PORT == None:
-        PORT = 5000
-
-    b_server.run(port=int(PORT))
+b_server.config['RESTFUL_JSON'] = {
+        'ensure_ascii': False
+}
+PORT = os.getenv('PORT')
+if PORT == None:
+    PORT = 5000
+    
+b_server.run(port=int(PORT))
