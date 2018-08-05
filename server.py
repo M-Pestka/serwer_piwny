@@ -1,7 +1,9 @@
 from flask import Flask
 from api import api_docs, bicycles
+from flask_cors import CORS
 
 b_server = Flask(__name__)
+CORS(b_server)
 
 @b_server.route("/api-docs")
 def api_docs_handler():
@@ -16,5 +18,5 @@ def bicycle_handler():
 if __name__ == '__main__':
     b_server.config['RESTFUL_JSON'] = {
             'ensure_ascii': False
-        }
+    }
     b_server.run()

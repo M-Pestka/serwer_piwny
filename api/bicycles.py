@@ -1,7 +1,6 @@
 import grequests
 from flask import Response, jsonify
 import xmltodict
-import pprint
 import json
 
 default_places = [
@@ -17,7 +16,6 @@ default_places = [
 ]
 
 def handle():
-    pp = pprint.PrettyPrinter(indent=2)
     responses = grequests.map(default_places)
     places_info = [(xmltodict.parse(response.text))['markers']['country']['city']['place'] for response in responses]
     processed_places_info = []
