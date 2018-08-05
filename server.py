@@ -22,5 +22,5 @@ b_server.config['RESTFUL_JSON'] = {
 PORT = os.getenv('PORT')
 if PORT == None:
     PORT = 5000
-    
+
 b_server.run(port=int(PORT))
