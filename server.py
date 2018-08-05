@@ -24,4 +24,4 @@ if __name__ == '__main__':
     if PORT == None:
         PORT = 5000
 
-    b_server.run(port=int(port))
+    b_server.run(port=int(PORT))
