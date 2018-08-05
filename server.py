@@ -20,5 +20,8 @@ if __name__ == '__main__':
     b_server.config['RESTFUL_JSON'] = {
             'ensure_ascii': False
     }
-    port = os.getenv('PORT', 5000)
-    b_server.run(port=port)
+    PORT = os.getenv('PORT')
+    if PORT == None:
+        PORT = 5000
+
+    b_server.run(port=int(port))
