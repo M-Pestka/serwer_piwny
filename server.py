@@ -19,8 +19,6 @@ def bicycle_handler():
 b_server.config['RESTFUL_JSON'] = {
         'ensure_ascii': False
 }
-PORT = os.getenv('PORT')
-if PORT == None:
-    PORT = 5000
 
-b_server.run(port=int(PORT))
+port = int(os.environ.get('PORT', 5000))
+b_server.run(host='0.0.0.0', port=port)
