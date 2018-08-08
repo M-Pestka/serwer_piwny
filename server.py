@@ -21,4 +21,4 @@ b_server.config['RESTFUL_JSON'] = {
 }
 
 port = int(os.environ.get('PORT', 5000))
-b_server.run()#host='0.0.0.0', port=port)
+b_server.run(host='0.0.0.0', port=port)
