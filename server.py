@@ -1,4 +1,4 @@
-from flask import Flask, Response
+from flask import Flask, Response, request
 from api import api_docs, bicycles, beers
 from flask_cors import CORS
 import os
@@ -30,9 +30,15 @@ def users_handler():
         logins.append(user[0])
     return Response(json.dumps({"all_users": logins}, ensure_ascii=False), mimetype='application/json')
     
-@b_server.route("/beers/loaner/<id>")
-def get_owed_beers(id):
-    return beers.handle_get_owed_beers(db, id)
+@b_server.route("/beers/loaner")
+def get_owed_beers():
+    id = request.args.get('id')
+    return beers.handle_get_owed_beers(db, int(id))
+
+@b_server.route("/beers/lender")
+def get_lent_beers():
+    id = request.args.get('id')
+    return beers.handle_get_lent_beers(db, int(id))
 
 b_server.config['RESTFUL_JSON'] = {
         'ensure_ascii': False
@@ -41,4 +47,4 @@ b_server.config['RESTFUL_JSON'] = {
 
 
 port = int(os.environ.get('PORT', 5000))
-b_server.run()#host='0.0.0.0', port=port)
+b_server.run(host='0.0.0.0', port=port)
