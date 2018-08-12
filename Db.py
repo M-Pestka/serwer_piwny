@@ -65,8 +65,9 @@ class Piwna_baza:
                                 FROM PIWKAHEHE p 
                                 LEFT JOIN USERS u
                                 ON u.ID = p.FROM_ID
-                                WHERE p.TO_ID = {}; ''',(ID,))
+                                WHERE p.TO_ID = (?); ''',(ID,))
             piwka = self.c.fetchall()
+            print(piwka)
             self.logger.info('piwka pomyślnie odczytane')
             return piwka
         except Exception as e:
@@ -153,7 +154,9 @@ class Piwna_baza:
         self.logger.warn('trying to delete user ID:{}'.format(user_ID))
         a = self.c.execute('select name, login from users where ID = (?)',(user_ID,))
 
-
+    def get_all_users(self):
+        all_users = self.c.execute('SELECT LOGIN FROM USERS').fetchall()
+        return all_users
 
     def close(self):
         self.logger.info('zamykanie bazy...')
