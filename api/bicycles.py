@@ -18,7 +18,7 @@ default_places = [
 
 def handle():
     responses = grequests.map(default_places)
-    places_info = [(xmltodict.parse(response.text))['markers']['country']['city']['place'] for response in responses]
+    places_info = [(xmltodict.parse(response.text))['markers']['country'][0]['city']['place'] for response in responses]
     processed_places_info = []
     for place_info in places_info:
         has_tandem = False
