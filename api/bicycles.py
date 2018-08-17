@@ -5,15 +5,15 @@ import json
 import re 
 
 default_places = [
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585728"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585724"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2586272"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585779"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585766"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585729"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585731"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2585735"),
-    grequests.get("http://nextbike.net/maps/nextbike-official.xml?place=2675985")
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585728"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585724"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2586272"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585779"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585766"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585729"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585731"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2585735"),
+    grequests.get("https://nextbike.net/maps/nextbike-official.xml?place=2675985")
 ]
 
 def handle():

@@ -10,8 +10,6 @@ b_server = Flask(__name__)
 CORS(b_server)
 create_db.initialize()
 db = Db.Piwna_baza()
-#db.add_user("Jakub Sikora", "Sikor")
-
 
 @b_server.route("/api-docs")
 def api_docs_handler():
